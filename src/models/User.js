@@ -20,6 +20,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       phone: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -40,7 +44,7 @@ module.exports = (sequelize) => {
         allowNull: true,
         defaultValue: true,
       },
-      idtarea: {
+      idarea: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
@@ -74,6 +78,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "usuario",
+      },
+      fecha_nacimiento: {
+        type: DataTypes.DATE,
+        allowNull: true,
       },
     },
     {
