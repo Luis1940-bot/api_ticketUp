@@ -33,4 +33,11 @@ router.post("/alta_users", async (req, res) => {
   }
 });
 
+router.get("/get_users", async (req, res) => {
+  try {
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 module.exports = router;
