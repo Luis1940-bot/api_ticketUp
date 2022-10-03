@@ -14,9 +14,10 @@ module.exports = (sequelize) => {
         type: DataTypes.DATE,
         allowNull: true,
       },
-      activo: {
+      active: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
+        defaultValue: true,
       },
       integrity: {
         type: DataTypes.STRING,

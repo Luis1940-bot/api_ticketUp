@@ -39,12 +39,14 @@ router.post("/alta_users", async (req, res) => {
         phone: phone,
         areaId: area
           ? (
-              await db.Area.findOne({ where: { area: area } })
+              await db.Areas.findOne({ where: { area: area.toLowerCase() } })
             )?.id
           : null,
         functionId: funcion
           ? (
-              await db.Function.findOne({ where: { function: funcion } })
+              await db.Functions.findOne({
+                where: { function: funcion.toLowerCase() },
+              })
             )?.id
           : null,
         fecha_nacimiento: fecha_nacimiento,
