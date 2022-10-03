@@ -83,6 +83,10 @@ module.exports = (sequelize) => {
         type: DataTypes.DATE,
         allowNull: true,
       },
+      integrity: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       timestamps: false,

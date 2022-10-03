@@ -62,6 +62,10 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
+      integrity: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       timestamps: false,

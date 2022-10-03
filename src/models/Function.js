@@ -15,6 +15,10 @@ module.exports = (sequelize) => {
         allowNull: true,
         defaultValue: true,
       },
+      integrity: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       timestamps: false,
