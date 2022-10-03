@@ -44,14 +44,14 @@ module.exports = (sequelize) => {
         allowNull: true,
         defaultValue: true,
       },
-      idarea: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-      idfuncion: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
+      // idarea: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: true,
+      // },
+      // idfuncion: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: true,
+      // },
       google_user: {
         type: DataTypes.STRING,
         allowNull: true,

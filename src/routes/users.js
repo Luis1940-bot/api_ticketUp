@@ -36,12 +36,12 @@ router.post("/alta_users", async (req, res) => {
         name: name,
         surname: surname,
         phone: phone,
-        idarea: area
+        areaId: area
           ? (
               await db.Area.findOne({ where: { area: area } })
             )?.id
           : null,
-        idfuncion: funcion
+        functionId: funcion
           ? (
               await db.Function.findOne({ where: { function: funcion } })
             )?.id
@@ -62,6 +62,13 @@ router.post("/alta_users", async (req, res) => {
 
 router.get("/get_users", async (req, res) => {
   try {
+    const users = await db.Users.findAll();
+
+    if (users.length > 0) {
+      res.status(201).json(users);
+    } else {
+      res.status(422).json("Not found");
+    }
   } catch (error) {
     res.status(400).send(error);
   }
