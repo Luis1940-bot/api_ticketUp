@@ -3,6 +3,7 @@ const { DataTypes } = require("sequelize");
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
+  //!permite armar relaciones para asignar quien debe realizar las acciones resolutivas
   sequelize.define(
     "asiggments",
     {

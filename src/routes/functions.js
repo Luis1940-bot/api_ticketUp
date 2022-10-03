@@ -12,37 +12,37 @@ router.use(
   })
 );
 
-router.post("/alta_area", async (req, res) => {
+router.post("/alta_function", async (req, res) => {
   try {
-    const { area, datetime } = req.body;
+    const { funcion, datetime } = req.body;
 
-    const integrity = bcrypt.hashSync(area + datetime, 10);
-    const [areaCreated, created] = await db.Areas.findOrCreate({
+    const integrity = bcrypt.hashSync(funcion + datetime, 10);
+    const [funcionCreated, created] = await db.Functions.findOrCreate({
       where: {
-        area: area.toLowerCase(),
+        function: funcion.toLowerCase(),
       },
       defaults: {
-        area: area.toLowerCase(),
+        function: funcion.toLowerCase(),
         datetime: datetime,
         integrity: integrity,
       },
     });
     if (created) {
-      res.status(200).send("Area created");
+      res.status(200).send("Function created");
     } else {
-      res.status(422).send("Existing Area ");
+      res.status(422).send("Existing Function ");
     }
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
-router.get("/get_areas", async (req, res) => {
+router.get("/get_functions", async (req, res) => {
   try {
-    const areas = await db.Areas.findAll();
+    const funcion = await db.Functions.findAll();
 
-    if (areas.length > 0) {
-      res.status(201).json(areas);
+    if (funcion.length > 0) {
+      res.status(201).json(funcion);
     } else {
       res.status(422).json("Not found");
     }

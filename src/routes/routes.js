@@ -8,6 +8,6 @@ const functions = require("./functions");
 //Routes and middlewares
 router.use("/", users);
 router.use("/", areas);
-router.use("/", funcions);
+router.use("/", functions);
 
 module.exports = router;
