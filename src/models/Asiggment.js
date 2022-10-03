@@ -22,6 +22,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      datetime: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
       integrity: {
         type: DataTypes.STRING,
         allowNull: true,

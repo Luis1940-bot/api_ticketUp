@@ -10,6 +10,10 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
+      datetime: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
       foto: {
         type: DataTypes.STRING,
         allowNull: true,

@@ -15,7 +15,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-
+      datetime: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
       password: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -44,14 +47,6 @@ module.exports = (sequelize) => {
         allowNull: true,
         defaultValue: true,
       },
-      // idarea: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: true,
-      // },
-      // idfuncion: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: true,
-      // },
       google_user: {
         type: DataTypes.STRING,
         allowNull: true,
