@@ -15,49 +15,60 @@ router.use(
 router.post("/alta_ticket", async (req, res) => {
   try {
     const {
-      email,
-      password,
-      name,
-      surname,
-      phone,
+      fecha,
+      hora,
+      estado,
+      fechaProgreso,
+      fechaCompletado,
+      fechaRevisado,
+      fechaAceptado,
+      ubicacion,
+      progreso,
+      criticidad,
+      categoria,
       area,
-      funcion,
-      fecha_nacimiento,
-      datetime,
+      user,
     } = req.body;
-    const hash = bcrypt.hashSync(password, 10);
-    const integrity = bcrypt.hashSync(email + password + name + datetime, 10);
-    const [userCreated, created] = await db.Tickets.findOrCreate({
-      where: {
-        email: email.toLowerCase(),
-      },
-      defaults: {
-        email: email.toLowerCase(),
-        password: hash,
-        name: name,
-        surname: surname,
-        phone: phone,
-        areaId: area
-          ? (
-              await db.Areas.findOne({ where: { area: area.toLowerCase() } })
-            )?.id
-          : null,
-        functionId: funcion
-          ? (
-              await db.Functions.findOne({
-                where: { function: funcion.toLowerCase() },
-              })
-            )?.id
-          : null,
-        fecha_nacimiento: fecha_nacimiento,
-        datetime: datetime,
-        integrity: integrity,
-      },
+
+    const integrity = bcrypt.hashSync(fecha + hora, 10);
+    const created = await db.Tickets.Create({
+      fecha: fecha,
+      hora: hora,
+      estado: estado,
+      fechaProgreso: fechaProgreso,
+      fechaCompletado: fechaCompletado,
+      fechaRevisado: fechaRevisado,
+      fechaAceptado: fechaAceptado,
+      ubicacion: ubicacion,
+      progreso: progreso,
+      criticId: criticidad
+        ? (
+            await db.Critics.findOne({
+              where: { criticidad: criticidad.toLowerCase() },
+            })
+          )?.id
+        : null,
+      categoriaId: categoria
+        ? (
+            await db.Categorias.findOne({
+              where: { categoria: categoria.toLowerCase() },
+            })
+          )?.id
+        : null,
+      areaId: area
+        ? (
+            await db.Areas.findOne({
+              where: { area: area.toLowerCase() },
+            })
+          )?.id
+        : null,
+      userId: user,
+      integrity: integrity,
     });
     if (created) {
-      res.status(200).send("User created");
+      res.status(200).send("Ticket created");
     } else {
-      res.status(422).send("Existing User ");
+      res.status(422).send("Ticket Not created");
     }
   } catch (error) {
     res.status(400).send(error);
