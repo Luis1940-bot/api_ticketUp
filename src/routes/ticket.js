@@ -77,10 +77,10 @@ router.post("/alta_ticket", async (req, res) => {
 
 router.get("/get_tickets", async (req, res) => {
   try {
-    const users = await db.Tickets.findAll();
+    const ticket = await db.Tickets.findAll();
 
-    if (users.length > 0) {
-      res.status(201).json(users);
+    if (ticket.length > 0) {
+      res.status(201).json(ticket);
     } else {
       res.status(422).json("Not found");
     }
