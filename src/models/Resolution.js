@@ -6,6 +6,10 @@ module.exports = (sequelize) => {
   sequelize.define(
     "resolutions",
     {
+      idticket: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       tiempos: {
         type: DataTypes.STRING,
         allowNull: true,

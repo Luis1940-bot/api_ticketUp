@@ -14,18 +14,18 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      iduser: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-      idcategoria: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-      idarea: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
+      // iduser: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: true,
+      // },
+      // idcategoria: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: true,
+      // },
+      // idarea: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: true,
+      // },
       estado: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -46,14 +46,10 @@ module.exports = (sequelize) => {
         type: DataTypes.DATE,
         allowNull: true,
       },
-      idcriticidad: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-      idtiempo: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
+      // idcriticidad: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: true,
+      // },
       ubicacion: {
         type: DataTypes.STRING,
         allowNull: true,
