@@ -29,6 +29,7 @@ module.exports = (sequelize) => {
       estado: {
         type: DataTypes.STRING,
         allowNull: true,
+        defaultValue: "abierto", //abierto-generado-completado-revision-aceptado
       },
       fechaProgreso: {
         type: DataTypes.DATE,
@@ -53,7 +54,7 @@ module.exports = (sequelize) => {
       ubicacion: {
         type: DataTypes.STRING,
         allowNull: true,
-      },
+      }, //ubicacion geográfica por coordenadas
       progreso: {
         type: DataTypes.INTEGER,
         allowNull: true,
@@ -63,6 +64,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
     },
+
     {
       timestamps: false,
     }
