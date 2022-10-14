@@ -47,7 +47,6 @@ const {
   Critics,
   Tickets,
   R_tickets,
-  Problems,
   Comments,
   Asiggments,
   Fotos,
@@ -83,9 +82,6 @@ R_tickets.belongsTo(Users);
 
 Areas.hasMany(R_tickets);
 R_tickets.belongsTo(Areas);
-
-Tickets.hasMany(Problems);
-Problems.belongsTo(Tickets);
 
 Tickets.hasMany(Comments);
 Comments.belongsTo(Tickets);

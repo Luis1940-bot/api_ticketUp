@@ -14,6 +14,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      problema: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
       // iduser: {
       //   type: DataTypes.INTEGER,
       //   allowNull: true,

@@ -34,7 +34,6 @@ conn
   })
   .then(() => {
     let tables = conn.query("SHOW FULL TRIGGERS"); //!son las tablas  + triggers
-
     return tables;
   })
   .then((res) => {
@@ -48,11 +47,11 @@ conn
             "fechaCompletado, " +
             "r_tickets.fechaRevisado, r_tickets.fechaAceptado, r_tickets.ubicacion, r_tickets.progreso, r_tickets.integrity, r_tickets." +
             "categoriaId, r_tickets.criticId" +
-            ", r_tickets.userId, r_tickets.areaId) VALUES (NEW.id, NEW.fecha, NEW.hora, NEW.estado, NEW.fechaProgreso," +
+            ", r_tickets.userId, r_tickets.areaId,r_tickets.problema) VALUES (NEW.id, NEW.fecha, NEW.hora, NEW.estado, NEW.fechaProgreso," +
             " NEW.fechaCompletado" +
             ", NEW.fechaRevisado, NEW.fechaAceptado, NEW.ubicacion, NEW.progreso, NEW.integrity, " +
             "NEW.categoriaId, NEW.criticId" +
-            ", NEW.userId, NEW.areaId);"
+            ", NEW.userId, NEW.areaId,NEW.problema);"
         ),
         console.log("zzzzzzzzzzzz force : true"));
   });

@@ -29,6 +29,7 @@ router.post("/alta_ticket", async (req, res) => {
       area,
       user,
       tiempos,
+      problema,
     } = req.body;
 
     const integrity = bcrypt.hashSync(
@@ -67,7 +68,7 @@ router.post("/alta_ticket", async (req, res) => {
             })
           )?.id
         : null,
-      resolutionsId: tiempos
+      resolutionId: tiempos
         ? (
             await db.Resolutions.findOne({
               where: { tiempos: tiempos.toLowerCase() },
@@ -75,6 +76,7 @@ router.post("/alta_ticket", async (req, res) => {
           )?.id
         : null,
       userId: user,
+      problema: problema,
       integrity: integrity,
     });
     if (created) {
