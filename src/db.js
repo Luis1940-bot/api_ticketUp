@@ -49,8 +49,9 @@ const {
   R_tickets,
   Problems,
   Comments,
-  Resolutions,
   Asiggments,
+  Fotos,
+  Resolutions,
 } = sequelize.models;
 
 Areas.hasMany(Users);
@@ -92,14 +93,20 @@ Comments.belongsTo(Tickets);
 Users.hasMany(Comments);
 Comments.belongsTo(Users);
 
-Tickets.hasMany(Resolutions);
-Resolutions.belongsTo(Tickets);
-
 Tickets.hasMany(Asiggments);
 Asiggments.belongsTo(Tickets);
 
 Users.hasMany(Asiggments);
 Asiggments.belongsTo(Users);
+
+Tickets.hasMany(Fotos);
+Fotos.belongsTo(Tickets);
+
+Resolutions.hasMany(Tickets);
+Tickets.belongsTo(Resolutions);
+
+Resolutions.hasMany(R_tickets);
+R_tickets.belongsTo(Resolutions);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

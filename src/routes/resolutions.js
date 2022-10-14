@@ -12,33 +12,34 @@ router.use(
   })
 );
 
-router.post("/alta_problem", async (req, res) => {
+router.post("/alta_resolution", async (req, res) => {
   try {
-    const { datetime, problema, idticket } = req.body;
+    const { datetime, tiempos, idticket } = req.body;
 
     const integrity = bcrypt.hashSync(datetime + idticket, 10);
-    const created = await db.Problems.create({
-      problema: problema,
+    const created = await db.Resolutions.create({
+      tiempos: tiempos,
       datetime: datetime,
       integrity: integrity,
       ticketId: idticket,
+      userId: iduser,
     });
     if (created) {
-      res.status(200).send("Problem created");
+      res.status(200).send("Comment created");
     } else {
-      res.status(422).send("Existing Problem ");
+      res.status(422).send("Existing Comment ");
     }
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
-router.get("/get_problems", async (req, res) => {
+router.get("/get_comments", async (req, res) => {
   try {
-    const problems = await db.Problems.findAll();
+    const comments = await db.Comments.findAll();
 
-    if (problems.length > 0) {
-      res.status(201).json(problems);
+    if (comments.length > 0) {
+      res.status(201).json(comments);
     } else {
       res.status(422).json("Not found");
     }

@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       problema: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
       },
       integrity: {

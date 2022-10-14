@@ -12,10 +12,6 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      idticket: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
       observacion: {
         type: DataTypes.STRING,
         allowNull: true,

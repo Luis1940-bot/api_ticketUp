@@ -7,10 +7,6 @@ module.exports = (sequelize) => {
   sequelize.define(
     "fotos",
     {
-      idticket: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
       datetime: {
         type: DataTypes.DATE,
         allowNull: true,
