@@ -14,15 +14,18 @@ router.use(
 
 router.post("/alta_resolution", async (req, res) => {
   try {
-    const { datetime, tiempos, idticket, iduser } = req.body;
-
-    const integrity = bcrypt.hashSync(datetime + idticket, 10);
-    const created = await db.Resolutions.create({
-      tiempos: tiempos,
-      datetime: datetime,
-      integrity: integrity,
-      ticketId: idticket,
-      userId: iduser,
+    const { datetime, tiempos } = req.body;
+    console.log(datetime, tiempos);
+    const integrity = bcrypt.hashSync(datetime + tiempos, 10);
+    const [resolutionsCreated, created] = await db.Resolutions.findOrCreate({
+      where: {
+        tiempos: tiempos.toLowerCase(),
+      },
+      defaults: {
+        tiempos: tiempos.toLowerCase(),
+        datetime: datetime,
+        integrity: integrity,
+      },
     });
     if (created) {
       res.status(200).send("Resolution created");

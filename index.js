@@ -26,19 +26,20 @@ const PORT = process.env.PORT;
 //modifica => alter: true
 //desde cero => force:true
 conn
-  .sync({ force: true })
+  .sync({ alter: false })
   .then(() => {
     server.listen(PORT, () => {
       console.log("%s listening at " + PORT); // eslint-disable-line no-console
     });
   })
   .then(() => {
-    let tables = conn.query("SHOW TRIGGERS LIKE 'insert_ticket';");
+    let tables = conn.query("SHOW FULL TRIGGERS"); //!son las tablas  + triggers
+
     return tables;
   })
   .then((res) => {
     res[0].length > 0
-      ? console.log("zzzzzzzzzzzz alter : false")
+      ? console.log(res[0].length, " zzzzzzzzzzzz alter : false")
       : (conn.query(
           "CREATE TRIGGER insert_ticket AFTER INSERT " +
             "ON tickets " +

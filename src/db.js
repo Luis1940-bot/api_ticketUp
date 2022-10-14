@@ -38,7 +38,7 @@ let capsEntries = entries.map((entry) => [
   entry[1],
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
-console.log(sequelize.models);
+// console.log(sequelize.models);
 const {
   Users,
   Areas,

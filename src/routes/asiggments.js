@@ -26,6 +26,7 @@ router.post("/alta_asiggment", async (req, res) => {
       ticketId: idticket,
       userId: iduser,
       idasignados: idasignados,
+      observacion: observacion,
     });
     if (created) {
       res.status(200).send("Resolution created");
