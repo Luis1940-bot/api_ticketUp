@@ -58,6 +58,7 @@ module.exports = (sequelize) => {
       progreso: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        defaultValue: 0, // 0 -25 -50 -100 el progreso de avance de resolución
       },
       integrity: {
         type: DataTypes.STRING,

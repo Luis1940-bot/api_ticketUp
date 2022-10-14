@@ -26,25 +26,31 @@ const PORT = process.env.PORT;
 //modifica => alter: true
 //desde cero => force:true
 conn
-  .sync({ force: true })
+  .sync({ alter: false })
   .then(() => {
     server.listen(PORT, () => {
       console.log("%s listening at " + PORT); // eslint-disable-line no-console
     });
   })
   .then(() => {
-    conn.query(
-      "CREATE TRIGGER insert_ticket AFTER INSERT " +
-        "ON tickets " +
-        "FOR EACH ROW " +
-        "INSERT INTO r_tickets (r_tickets.id, r_tickets.fecha, r_tickets.hora, r_tickets.estado, r_tickets.fechaProgreso, r_tickets." +
-        "fechaCompletado, " +
-        "r_tickets.fechaRevisado, r_tickets.fechaAceptado, r_tickets.ubicacion, r_tickets.progreso, r_tickets.integrity, r_tickets." +
-        "categoriaId, r_tickets.criticId" +
-        ", r_tickets.userId, r_tickets.areaId) VALUES (NEW.id, NEW.fecha, NEW.hora, NEW.estado, NEW.fechaProgreso," +
-        " NEW.fechaCompletado" +
-        ", NEW.fechaRevisado, NEW.fechaAceptado, NEW.ubicacion, NEW.progreso, NEW.integrity, " +
-        "NEW.categoriaId, NEW.criticId" +
-        ", NEW.userId, NEW.areaId);"
-    );
+    let tables = conn.query("SHOW TABLES LIKE 'users';");
+    return tables;
+  })
+  .then((res) => {
+    res
+      ? console.log("zzzzzzzzzzzz alter:force")
+      : conn.query(
+          "CREATE TRIGGER insert_ticket AFTER INSERT " +
+            "ON tickets " +
+            "FOR EACH ROW " +
+            "INSERT INTO r_tickets (r_tickets.id, r_tickets.fecha, r_tickets.hora, r_tickets.estado, r_tickets.fechaProgreso, r_tickets." +
+            "fechaCompletado, " +
+            "r_tickets.fechaRevisado, r_tickets.fechaAceptado, r_tickets.ubicacion, r_tickets.progreso, r_tickets.integrity, r_tickets." +
+            "categoriaId, r_tickets.criticId" +
+            ", r_tickets.userId, r_tickets.areaId) VALUES (NEW.id, NEW.fecha, NEW.hora, NEW.estado, NEW.fechaProgreso," +
+            " NEW.fechaCompletado" +
+            ", NEW.fechaRevisado, NEW.fechaAceptado, NEW.ubicacion, NEW.progreso, NEW.integrity, " +
+            "NEW.categoriaId, NEW.criticId" +
+            ", NEW.userId, NEW.areaId);"
+        );
   });

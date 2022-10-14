@@ -4,6 +4,7 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   //!permite armar relaciones para asignar quien debe realizar las acciones resolutivas
+  //!una persona de mayor nivel en la organización ingresa al modulo de asignacion y decide la o las personas que deben resolverlo
   sequelize.define(
     "asiggments",
     {
@@ -11,8 +12,8 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      asignados: {
-        type: DataTypes.STRING,
+      idasignados: {
+        type: DataTypes.INTEGER,
         allowNull: true,
       },
       idticket: {

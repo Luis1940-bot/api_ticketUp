@@ -17,30 +17,50 @@ router.post("/alta_ticket", async (req, res) => {
     const {
       fecha,
       hora,
-      estado,
+      //estado,
       fechaProgreso,
-      fechaCompletado,
-      fechaRevisado,
-      fechaAceptado,
+      //fechaCompletado,
+      //fechaRevisado,
+      //fechaAceptado,
       ubicacion,
-      progreso,
+      //progreso,
       criticidad,
       categoria,
       area,
       user,
     } = req.body;
+    console.log(
+      fecha,
+      "oo",
+      hora,
+      "oo",
+      fechaProgreso,
+      "oo",
+      ubicacion,
+      "oo",
+      criticidad,
+      "oo",
+      categoria,
+      "oo",
+      area,
+      "oo",
+      user
+    );
+    const integrity = bcrypt.hashSync(
+      fecha + hora + criticidad + categoria + area + user,
+      10
+    );
 
-    const integrity = bcrypt.hashSync(fecha + hora, 10);
-    const created = await db.Tickets.Create({
+    const created = await db.Tickets.create({
       fecha: fecha,
       hora: hora,
-      estado: estado,
+      //estado: estado,
       fechaProgreso: fechaProgreso,
-      fechaCompletado: fechaCompletado,
-      fechaRevisado: fechaRevisado,
-      fechaAceptado: fechaAceptado,
+      //fechaCompletado: fechaCompletado,
+      //fechaRevisado: fechaRevisado,
+      //fechaAceptado: fechaAceptado,
       ubicacion: ubicacion,
-      progreso: progreso,
+      //progreso: progreso,
       criticId: criticidad
         ? (
             await db.Critics.findOne({
