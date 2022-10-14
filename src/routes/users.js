@@ -110,6 +110,18 @@ router.post("/userdblogin", async (req, res) => {
       where: {
         email: email.toLowerCase(),
       },
+      include: [
+        {
+          model: db.Areas,
+          attributes: ["area"],
+          //required: true,
+        },
+        {
+          model: db.Functions,
+          attributes: ["function"],
+          //required: true,
+        },
+      ],
       raw: true,
     });
 
@@ -137,8 +149,7 @@ router.post("/userdblogin", async (req, res) => {
       if (!result) {
         return res.status(401).json({ error: "Wrong password" });
       }
-      console.log(userFound);
-      console.log("¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿");
+
       const userInfoFront = {
         id: userFound.id,
         email: userFound.email,
@@ -152,12 +163,9 @@ router.post("/userdblogin", async (req, res) => {
         userType: userFound.userType,
         fecha_nacimiento: userFound.fecha_nacimiento,
         integrity: userFound.integrity,
-        area: userFound["areas.area"],
-        funcion: userFound["functions.function"],
+        area: userFound["area.area"],
+        funcion: userFound["function.function"],
       };
-      console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
-      console.log(userInfoFront);
-      console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 
       const tokenFront = jwt.sign({ userInfoFront }, process.env.TOKENKEY, {
         expiresIn: "3h",
