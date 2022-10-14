@@ -12,17 +12,20 @@ router.use(
   })
 );
 
-router.post("/alta_resolution", async (req, res) => {
+router.post("/alta_asiggment", async (req, res) => {
   try {
-    const { datetime, tiempos, idticket, iduser } = req.body;
+    const { idasignados, datetime, idticket, iduser, observacion } = req.body;
 
-    const integrity = bcrypt.hashSync(datetime + idticket, 10);
-    const created = await db.Resolutions.create({
-      tiempos: tiempos,
+    const integrity = bcrypt.hashSync(
+      datetime + idticket + iduser + idasignados,
+      10
+    );
+    const created = await db.Asiggments.create({
       datetime: datetime,
       integrity: integrity,
       ticketId: idticket,
       userId: iduser,
+      idasignados: idasignados,
     });
     if (created) {
       res.status(200).send("Resolution created");
@@ -34,12 +37,12 @@ router.post("/alta_resolution", async (req, res) => {
   }
 });
 
-router.get("/get_resolutions", async (req, res) => {
+router.get("/get_asiggments", async (req, res) => {
   try {
-    const resolution = await db.Resolutions.findAll();
+    const asiggment = await db.Asiggments.findAll();
 
-    if (resolution.length > 0) {
-      res.status(201).json(resolution);
+    if (asiggment.length > 0) {
+      res.status(201).json(asiggment);
     } else {
       res.status(422).json("Not found");
     }
