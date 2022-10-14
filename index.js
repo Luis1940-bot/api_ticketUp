@@ -26,20 +26,20 @@ const PORT = process.env.PORT;
 //modifica => alter: true
 //desde cero => force:true
 conn
-  .sync({ alter: false })
+  .sync({ force: true })
   .then(() => {
     server.listen(PORT, () => {
       console.log("%s listening at " + PORT); // eslint-disable-line no-console
     });
   })
   .then(() => {
-    let tables = conn.query("SHOW TABLES LIKE 'users';");
+    let tables = conn.query("SHOW TRIGGERS LIKE 'insert_ticket';");
     return tables;
   })
   .then((res) => {
-    res
-      ? console.log("zzzzzzzzzzzz alter:force")
-      : conn.query(
+    res[0].length > 0
+      ? console.log("zzzzzzzzzzzz alter : false")
+      : (conn.query(
           "CREATE TRIGGER insert_ticket AFTER INSERT " +
             "ON tickets " +
             "FOR EACH ROW " +
@@ -52,5 +52,6 @@ conn
             ", NEW.fechaRevisado, NEW.fechaAceptado, NEW.ubicacion, NEW.progreso, NEW.integrity, " +
             "NEW.categoriaId, NEW.criticId" +
             ", NEW.userId, NEW.areaId);"
-        );
+        ),
+        console.log("zzzzzzzzzzzz force : true"));
   });

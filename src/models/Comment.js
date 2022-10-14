@@ -6,14 +6,6 @@ module.exports = (sequelize) => {
   sequelize.define(
     "comments",
     {
-      idticket: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-      iduser: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
       comentario: {
         type: DataTypes.STRING,
         allowNull: true,

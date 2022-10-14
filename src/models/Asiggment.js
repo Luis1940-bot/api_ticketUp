@@ -8,10 +8,6 @@ module.exports = (sequelize) => {
   sequelize.define(
     "asiggments",
     {
-      idasignador: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
       idasignados: {
         type: DataTypes.INTEGER,
         allowNull: true,

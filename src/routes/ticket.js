@@ -29,23 +29,7 @@ router.post("/alta_ticket", async (req, res) => {
       area,
       user,
     } = req.body;
-    console.log(
-      fecha,
-      "oo",
-      hora,
-      "oo",
-      fechaProgreso,
-      "oo",
-      ubicacion,
-      "oo",
-      criticidad,
-      "oo",
-      categoria,
-      "oo",
-      area,
-      "oo",
-      user
-    );
+
     const integrity = bcrypt.hashSync(
       fecha + hora + criticidad + categoria + area + user,
       10
@@ -97,7 +81,30 @@ router.post("/alta_ticket", async (req, res) => {
 
 router.get("/get_tickets", async (req, res) => {
   try {
-    const ticket = await db.Tickets.findAll();
+    const ticket = await db.Tickets.findAll({
+      include: [
+        {
+          model: db.Critics,
+          attributes: ["criticidad"],
+          //required: true,
+        },
+        {
+          model: db.Categorias,
+          attributes: ["categoria"],
+          //required: true,
+        },
+        {
+          model: db.Areas,
+          attributes: ["area"],
+          //required: true,
+        },
+        {
+          model: db.Users,
+          attributes: ["name", "surname", "email"],
+          //required: true,
+        },
+      ],
+    });
 
     if (ticket.length > 0) {
       res.status(201).json(ticket);

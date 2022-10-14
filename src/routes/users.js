@@ -15,15 +15,15 @@ router.use(
 router.post("/alta_users", async (req, res) => {
   try {
     const {
-      email,
-      password,
       name,
       surname,
+      datetime,
+      password,
+      email,
       phone,
       area,
       funcion,
       fecha_nacimiento,
-      datetime,
     } = req.body;
     const hash = bcrypt.hashSync(password, 10);
     const integrity = bcrypt.hashSync(email + password + name + datetime, 10);
@@ -66,7 +66,20 @@ router.post("/alta_users", async (req, res) => {
 
 router.get("/get_users", async (req, res) => {
   try {
-    const users = await db.Users.findAll();
+    const users = await db.Users.findAll({
+      include: [
+        {
+          model: db.Areas,
+          attributes: ["area"],
+          //required: true,
+        },
+        {
+          model: db.Functions,
+          attributes: ["function"],
+          //required: true,
+        },
+      ],
+    });
 
     if (users.length > 0) {
       res.status(201).json(users);
