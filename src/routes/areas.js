@@ -39,7 +39,9 @@ router.post("/alta_area", async (req, res) => {
 
 router.get("/get_areas", async (req, res) => {
   try {
-    const areas = await db.Areas.findAll();
+    const areas = await db.Areas.findAll({
+      raw: true,
+    });
 
     if (areas.length > 0) {
       res.status(201).json(areas);

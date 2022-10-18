@@ -37,7 +37,10 @@ router.post("/alta_users", async (req, res) => {
       fecha_nacimiento,
     } = req.body;
     const hash = bcrypt.hashSync(password, 10);
-    const integrity = bcrypt.hashSync(email + password + name + datetime, 10);
+    const integrity = bcrypt.hashSync(
+      email.toLowerCase() + hash + name.toLowerCase() + datetime,
+      10
+    );
     const [userCreated, created] = await db.Users.findOrCreate({
       where: {
         email: email.toLowerCase(),
@@ -45,8 +48,8 @@ router.post("/alta_users", async (req, res) => {
       defaults: {
         email: email.toLowerCase(),
         password: hash,
-        name: name,
-        surname: surname,
+        name: name.toLowerCase(),
+        surname: surname.toLowerCase(),
         phone: phone,
         areaId: area
           ? (
@@ -90,6 +93,7 @@ router.get("/get_users", async (req, res) => {
           //required: true,
         },
       ],
+      raw: true,
     });
 
     if (users.length > 0) {
@@ -150,6 +154,22 @@ router.post("/userdblogin", async (req, res) => {
         return res.status(401).json({ error: "Wrong password" });
       }
 
+      const integrity = bcrypt.hashSync(
+        userFound.email.toLowerCase() +
+          userFound.password +
+          userFound.name.toLowerCase() +
+          userFound.datetime,
+        10
+      );
+      console.log(
+        userFound.email.toLowerCase() +
+          " ** " +
+          userFound.password +
+          " ** " +
+          userFound.name.toLowerCase() +
+          " ** " +
+          userFound.datetime
+      );
       const userInfoFront = {
         id: userFound.id,
         email: userFound.email,
