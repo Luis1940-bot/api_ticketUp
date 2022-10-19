@@ -144,4 +144,57 @@ router.get("/get_tickets", async (req, res) => {
   }
 });
 
+router.get("/get_ticket_ID/:id", async (req, res) => {
+  try {
+    const ticket = await db.Tickets.findAll({
+      include: [
+        {
+          model: db.Critics,
+          attributes: ["criticidad"],
+          //required: true,
+        },
+        {
+          model: db.Categorias,
+          attributes: ["categoria"],
+          //required: true,
+        },
+        {
+          model: db.Areas,
+          attributes: ["area"],
+          //required: true,
+        },
+        {
+          model: db.Users,
+          attributes: ["name", "surname", "email"],
+          //required: true,
+        },
+        {
+          model: db.Resolutions,
+          attributes: ["tiempos"],
+          //required: true,
+        },
+      ],
+      raw: true,
+    });
+
+    if (ticket.length > 0) {
+      const integrity =
+        manejoFechas.fecha_yyyy_mm_dd_hh(ticket[0].fecha) +
+        ticket[0].hora +
+        ticket[0].userId +
+        manejoFechas.fecha_yyyy_mm_dd_hh(ticket[0].fechaProgreso);
+      if (integrity != ticket[0].integrity) {
+        return res.status(401).json({
+          error: "Not integrity",
+        });
+      }
+      res.status(201).json(ticket);
+    } else {
+      res.status(422).json("Not found");
+    }
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 module.exports = router;

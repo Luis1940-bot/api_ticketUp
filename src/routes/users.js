@@ -268,7 +268,7 @@ router.get("/userValidationEmail/:id", async (req, res) => {
   });
 });
 
-router.get("/get_ticket_ID/:id", async (req, res) => {
+router.get("/get_user_ID/:id", async (req, res) => {
   try {
     console.log("entro");
     let { id } = req.params;
