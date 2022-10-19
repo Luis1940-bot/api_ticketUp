@@ -40,7 +40,7 @@ router.post("/alta_asiggment", async (req, res) => {
 
 router.get("/get_asiggments", async (req, res) => {
   try {
-    const asiggment = await db.Asiggments.findAll();
+    const asiggment = await db.Asiggments.findAll({ raw: true });
 
     if (asiggment.length > 0) {
       res.status(201).json(asiggment);

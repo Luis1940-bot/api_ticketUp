@@ -268,4 +268,86 @@ router.get("/userValidationEmail/:id", async (req, res) => {
   });
 });
 
+router.get("/get_ticket_ID/:id", async (req, res) => {
+  try {
+    console.log("entro");
+    let { id } = req.params;
+    if (!id || !isNumeric(id)) {
+      return res.status(400).json({
+        error: "information required for user validation",
+      });
+    }
+    console.log(id);
+    const userFound = await db.Users.findOne({
+      where: {
+        id: id,
+      },
+      include: [
+        {
+          model: db.Areas,
+          attributes: ["area"],
+          //required: true,
+        },
+        {
+          model: db.Functions,
+          attributes: ["function"],
+          //required: true,
+        },
+      ],
+      raw: true,
+    });
+
+    if (!userFound) {
+      return res.status(401).json({
+        error: "User not found",
+      });
+    }
+    if (userFound.active === 0) {
+      return res.status(401).json({ error: "User is inactive" });
+    }
+    if (userFound.validated_email === 0) {
+      return res
+        .status(401)
+        .json({ error: "User email is not validated", id: userFound.id });
+    }
+
+    const integrity =
+      userFound.email.toLowerCase() +
+      userFound.password +
+      userFound.name.toLowerCase() +
+      manejoFechas.fecha_yyyy_mm_dd_hh(userFound.datetime);
+
+    if (integrity != userFound.integrity) {
+      return res.status(401).json({
+        error: "Not integrity",
+      });
+    }
+    const userInfoFront = {
+      id: userFound.id,
+      email: userFound.email,
+      name: userFound.name,
+      surname: userFound.surname,
+      phone: userFound.phone,
+      datetime: userFound.datetime,
+      firma: userFound.firma,
+      admin: userFound.admin,
+      photo: userFound.photo,
+      userType: userFound.userType,
+      fecha_nacimiento: userFound.fecha_nacimiento,
+      integrity: userFound.integrity,
+      area: userFound["area.area"],
+      funcion: userFound["function.function"],
+    };
+
+    // RESPONSE
+    res.status(200).json({
+      userInfoFront,
+    });
+  } catch (error) {
+    return res.status(401).json({
+      error: error,
+    });
+  }
+});
+
 module.exports = router;

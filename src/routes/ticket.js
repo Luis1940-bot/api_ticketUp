@@ -33,13 +33,11 @@ router.post("/alta_ticket", async (req, res) => {
       problema,
     } = req.body;
 
-    const integrity = bcrypt.hashSync(
+    const integrity =
       manejoFechas.fecha_yyyy_mm_dd_hh(fecha) +
-        hora +
-        user +
-        manejoFechas.fecha_yyyy_mm_dd_hh(fechaProgreso),
-      10
-    );
+      hora +
+      user +
+      manejoFechas.fecha_yyyy_mm_dd_hh(fechaProgreso);
 
     const created = await db.Tickets.create({
       fecha: fecha,
@@ -127,16 +125,12 @@ router.get("/get_tickets", async (req, res) => {
     });
 
     if (ticket.length > 0) {
-      const integrity = bcrypt.hashSync(
-        manejoFechas.fecha_yyyy_mm_dd_hh(ticket.fecha) +
-          ticket.hora +
-          ticket.user +
-          manejoFechas.fecha_yyyy_mm_dd_hh(ticket.fechaProgreso),
-        10
-      );
-      console.log(integrity);
-      console.log(ticket.integrity);
-      if (integrity != ticket.integrity) {
+      const integrity =
+        manejoFechas.fecha_yyyy_mm_dd_hh(ticket[0].fecha) +
+        ticket[0].hora +
+        ticket[0].userId +
+        manejoFechas.fecha_yyyy_mm_dd_hh(ticket[0].fechaProgreso);
+      if (integrity != ticket[0].integrity) {
         return res.status(401).json({
           error: "Not integrity",
         });
