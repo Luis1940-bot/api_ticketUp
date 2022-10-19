@@ -28,15 +28,56 @@ function fechaActual_yyyy_mm_dd() {
   let fecha = new fecha_Actual();
   return fecha.hoyMySQL;
 }
-function fecha_dd_mm_yyyy(date) {
-  let fecha = new fecha_Actual();
-  return fecha.hoyNormal;
+function fecha_dd_mm_yyyy(datex) {
+  let day = datex.getDate();
+  let month = datex.getMonth() + 1;
+  let year = datex.getFullYear();
+  day < 10 ? (day = "0" + day) : null;
+  month < 10 ? (month = "0" + month) : null;
+  return day + "-" + month + "-" + year;
 }
-function fecha_yyyy_mm_dd(date) {
-  let fecha = new fecha_Actual();
-  return fecha.hoyMySQL;
+function fecha_yyyy_mm_dd(datex) {
+  let day = datex.getDate();
+  let month = datex.getMonth() + 1;
+  let year = datex.getFullYear();
+  day < 10 ? (day = "0" + day) : null;
+  month < 10 ? (month = "0" + month) : null;
+  return year + "-" + month + "-" + day;
+}
+
+function fecha_yyyy_mm_dd_hh(datex) {
+  let day = datex.getDate();
+  let month = datex.getMonth() + 1;
+  let year = datex.getFullYear();
+  let hour = datex.getUTCHours();
+  let min = datex.getMinutes();
+  let sec = datex.getSeconds();
+  day < 10 ? (day = "0" + day) : null;
+  month < 10 ? (month = "0" + month) : null;
+  hour < 10 ? (hour = "0" + hour) : null;
+  min < 10 ? (min = "0" + min) : null;
+  sec < 10 ? (sec = "0" + sec) : null;
+  return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+}
+function fecha_dd_mm_yyyy_hh(datex) {
+  let day = datex.getDate();
+  let month = datex.getMonth() + 1;
+  let year = datex.getFullYear();
+  let hour = datex.getUTCHours();
+  let min = datex.getMinutes();
+  let sec = datex.getSeconds();
+  day < 10 ? (day = "0" + day) : null;
+  month < 10 ? (month = "0" + month) : null;
+  hour < 10 ? (hour = "0" + hour) : null;
+  min < 10 ? (min = "0" + min) : null;
+  sec < 10 ? (sec = "0" + sec) : null;
+  return day + "-" + month + "-" + year + " " + hour + ":" + min + ":" + sec;
 }
 module.exports = {
   fechaActual_dd_mm_yyyy,
   fechaActual_yyyy_mm_dd,
+  fecha_dd_mm_yyyy,
+  fecha_yyyy_mm_dd,
+  fecha_dd_mm_yyyy_hh,
+  fecha_yyyy_mm_dd_hh,
 };

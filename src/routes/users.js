@@ -3,6 +3,7 @@ const express = require("express");
 const db = require("../db.js");
 const router = Router();
 const bcrypt = require("bcrypt");
+const manejoFechas = require("../controllers/manejoFecha");
 const jwt = require("jsonwebtoken");
 router.use(express.json());
 const cors = require("cors");
@@ -37,10 +38,12 @@ router.post("/alta_users", async (req, res) => {
       fecha_nacimiento,
     } = req.body;
     const hash = bcrypt.hashSync(password, 10);
-    const integrity = bcrypt.hashSync(
-      email.toLowerCase() + hash + name.toLowerCase() + datetime,
-      10
-    );
+    const integrity =
+      email.toLowerCase() +
+      hash +
+      name.toLowerCase() +
+      manejoFechas.fecha_yyyy_mm_dd_hh(userFound.datetime);
+
     const [userCreated, created] = await db.Users.findOrCreate({
       where: {
         email: email.toLowerCase(),
@@ -64,7 +67,7 @@ router.post("/alta_users", async (req, res) => {
             )?.id
           : null,
         fecha_nacimiento: fecha_nacimiento,
-        datetime: datetime,
+        datetime: manejoFechas.fecha_yyyy_mm_dd_hh(userFound.datetime),
         integrity: integrity,
       },
     });
@@ -154,22 +157,17 @@ router.post("/userdblogin", async (req, res) => {
         return res.status(401).json({ error: "Wrong password" });
       }
 
-      const integrity = bcrypt.hashSync(
+      const integrity =
         userFound.email.toLowerCase() +
-          userFound.password +
-          userFound.name.toLowerCase() +
-          userFound.datetime,
-        10
-      );
-      console.log(
-        userFound.email.toLowerCase() +
-          " ** " +
-          userFound.password +
-          " ** " +
-          userFound.name.toLowerCase() +
-          " ** " +
-          userFound.datetime
-      );
+        userFound.password +
+        userFound.name.toLowerCase() +
+        manejoFechas.fecha_yyyy_mm_dd_hh(userFound.datetime);
+
+      if (integrity != userFound.integrity) {
+        return res.status(401).json({
+          error: "Not integrity",
+        });
+      }
       const userInfoFront = {
         id: userFound.id,
         email: userFound.email,

@@ -3,6 +3,7 @@ const express = require("express");
 const db = require("../db.js");
 const router = Router();
 const bcrypt = require("bcrypt");
+const manejoFechas = require("../controllers/manejoFecha");
 router.use(express.json());
 const cors = require("cors");
 router.use(cors());
@@ -33,7 +34,10 @@ router.post("/alta_ticket", async (req, res) => {
     } = req.body;
 
     const integrity = bcrypt.hashSync(
-      fecha + hora + criticidad + categoria + area + user + tiempos,
+      manejoFechas.fecha_yyyy_mm_dd_hh(fecha) +
+        hora +
+        user +
+        manejoFechas.fecha_yyyy_mm_dd_hh(fechaProgreso),
       10
     );
 
@@ -119,9 +123,24 @@ router.get("/get_tickets", async (req, res) => {
           //required: true,
         },
       ],
+      raw: true,
     });
 
     if (ticket.length > 0) {
+      const integrity = bcrypt.hashSync(
+        manejoFechas.fecha_yyyy_mm_dd_hh(ticket.fecha) +
+          ticket.hora +
+          ticket.user +
+          manejoFechas.fecha_yyyy_mm_dd_hh(ticket.fechaProgreso),
+        10
+      );
+      console.log(integrity);
+      console.log(ticket.integrity);
+      if (integrity != ticket.integrity) {
+        return res.status(401).json({
+          error: "Not integrity",
+        });
+      }
       res.status(201).json(ticket);
     } else {
       res.status(422).json("Not found");
